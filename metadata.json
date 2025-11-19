@@ -1,0 +1,5 @@
+{
+  "name": "Informa POS Smart Split",
+  "description": "A specialized calculator for retail cashiers to optimize split payments between Loyalty Points (Cash Point) and Vouchers, ensuring vouchers are fully utilized.",
+  "requestFramePermissions": []
+}
