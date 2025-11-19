@@ -383,7 +383,7 @@ export default function App() {
                       Kasir lihat poin (455rb) hampir cukup lunasin 500rb.
                     </p>
                     <div className="text-sm bg-white/50 p-2 rounded text-red-900 font-mono">
-                      Bayar Poin 455rb -> Sisa 45rb.<br/>
+                      Bayar Poin 455rb &rarr; Sisa 45rb.<br/>
                       Voucher 200rb cuma kepakai 45rb.<br/>
                       <span className="font-bold text-red-600">CUSTOMER RUGI 155.000!</span>
                     </div>
