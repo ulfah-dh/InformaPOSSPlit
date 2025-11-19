@@ -10,7 +10,11 @@ import {
   CheckCircle2, 
   AlertTriangle,
   Sparkles,
-  RefreshCw
+  RefreshCw,
+  HelpCircle,
+  X,
+  CheckCheck,
+  AlertOctagon
 } from 'lucide-react';
 
 // Constants
@@ -20,6 +24,7 @@ export default function App() {
   const [totalTransaction, setTotalTransaction] = useState<number>(0);
   const [memberPoints, setMemberPoints] = useState<number>(0);
   const [voucherValue, setVoucherValue] = useState<number>(0);
+  const [showHelp, setShowHelp] = useState<boolean>(false);
   
   // Calculation Logic
   const calculation = useMemo(() => {
@@ -67,17 +72,26 @@ export default function App() {
       {/* Left Panel: Inputs */}
       <div className="w-full md:w-5/12 lg:w-4/12 bg-white shadow-xl z-20 overflow-y-auto h-auto md:h-screen flex flex-col border-r border-[#e5e7eb]">
         {/* Header / Logo - Informa Blue Background */}
-        <div className="bg-[#0f4372] p-6 flex items-center space-x-3 shadow-md z-10">
-          {/* Simple SVG Logo Representation - White bg for contrast */}
-          <div className="bg-white text-[#e55541] p-2 rounded-lg shadow-sm shrink-0">
-             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M4 6H20M4 12H20M4 18H12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-             </svg>
+        <div className="bg-[#0f4372] p-6 flex items-center justify-between shadow-md z-10">
+          <div className="flex items-center space-x-3">
+            {/* Simple SVG Logo Representation - White bg for contrast */}
+            <div className="bg-white text-[#e55541] p-2 rounded-lg shadow-sm shrink-0">
+               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4 6H20M4 12H20M4 18H12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+               </svg>
+            </div>
+            <div>
+              <h1 className="text-xl font-bold text-white tracking-tight">Informa POS Helper</h1>
+              <p className="text-xs text-blue-100/80 font-medium">Kalkulator Split Payment Poin & Voucher</p>
+            </div>
           </div>
-          <div>
-            <h1 className="text-xl font-bold text-white tracking-tight">Informa POS Helper</h1>
-            <p className="text-xs text-blue-100/80 font-medium">Kalkulator Split Payment Poin & Voucher</p>
-          </div>
+          <button 
+            onClick={() => setShowHelp(true)}
+            className="text-white/80 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-full"
+            title="Panduan & Komparasi"
+          >
+            <HelpCircle className="w-6 h-6" />
+          </button>
         </div>
 
         <div className="p-6 flex flex-col flex-grow">
@@ -272,6 +286,139 @@ export default function App() {
           </p>
         </div>
       </div>
+
+      {/* HELP MODAL */}
+      {showHelp && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0f4372]/80 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto flex flex-col relative">
+            
+            {/* Modal Header */}
+            <div className="p-6 bg-[#f8fafc] border-b border-gray-200 flex justify-between items-center sticky top-0 z-10 rounded-t-2xl">
+              <div>
+                <h2 className="text-xl font-bold text-[#0f4372] flex items-center gap-2">
+                  <Sparkles className="w-5 h-5 text-[#e55541]" />
+                  Kenapa Pakai App Ini?
+                </h2>
+                <p className="text-sm text-[#648aa3]">Komparasi Cara Manual vs Smart Split</p>
+              </div>
+              <button 
+                onClick={() => setShowHelp(false)}
+                className="p-2 hover:bg-gray-200 rounded-full transition-colors text-gray-500 hover:text-[#e55541]"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+
+            {/* Modal Content */}
+            <div className="p-6 space-y-8">
+              
+              {/* Case 1 */}
+              <div className="border rounded-xl p-5 bg-white shadow-sm">
+                <div className="mb-4">
+                  <div className="inline-block px-3 py-1 bg-[#e55541]/10 text-[#e55541] text-xs font-bold rounded mb-2">CASE 1: HUMAN ERROR</div>
+                  <h3 className="font-bold text-lg text-[#0f4372]">Belanja 3 Juta, Poin Banyak, Voucher 700rb</h3>
+                  <p className="text-sm text-gray-500">Total: 3.015.000 | Poin: 3.000 (7.5 Juta) | Voucher: 700.000</p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Manual */}
+                  <div className="bg-red-50 p-4 rounded-lg border border-red-100">
+                    <div className="flex items-center gap-2 mb-3 text-red-700 font-bold border-b border-red-200 pb-2">
+                      <AlertOctagon className="w-4 h-4" /> Cara Manual (Berisiko)
+                    </div>
+                    <ul className="space-y-2 text-sm text-red-800/80">
+                      <li className="flex gap-2">
+                        <span className="font-bold">1.</span> 
+                        <span>Kasir harus hitung: (3.015.000 - 700.000) / 2500.</span>
+                      </li>
+                      <li className="flex gap-2">
+                        <span className="font-bold">2.</span> 
+                        <span>Rawan salah ketik di kalkulator (misal lupa bagi 2500).</span>
+                      </li>
+                      <li className="flex gap-2">
+                        <span className="font-bold">3.</span> 
+                        <span>Jika salah input poin full (3000), sisa tagihan 0. <span className="font-bold underline">Voucher 700rb HANGUS.</span></span>
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  {/* App */}
+                  <div className="bg-green-50 p-4 rounded-lg border border-green-100">
+                    <div className="flex items-center gap-2 mb-3 text-green-700 font-bold border-b border-green-200 pb-2">
+                      <CheckCheck className="w-4 h-4" /> Cara Smart Split
+                    </div>
+                    <ul className="space-y-2 text-sm text-green-800/80">
+                      <li className="flex gap-2">
+                        <span className="font-bold">1.</span> 
+                        <span>Input angka saja. App otomatis hitung sisa ruang.</span>
+                      </li>
+                      <li className="flex gap-2">
+                        <span className="font-bold">2.</span> 
+                        <span>Langsung muncul perintah: <span className="font-bold bg-white px-1 rounded">"Input 926 Poin"</span>.</span>
+                      </li>
+                      <li className="flex gap-2">
+                        <span className="font-bold">3.</span> 
+                        <span>Dijamin sisa tagihan tepat 700.000 untuk voucher.</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Case 2 */}
+              <div className="border rounded-xl p-5 bg-white shadow-sm">
+                <div className="mb-4">
+                  <div className="inline-block px-3 py-1 bg-[#f6b742]/10 text-[#f6b742] text-xs font-bold rounded mb-2">CASE 2: JEBAKAN LOGIKA</div>
+                  <h3 className="font-bold text-lg text-[#0f4372]">Belanja 500rb, Poin Pas-pasan, Voucher 200rb</h3>
+                  <p className="text-sm text-gray-500">Total: 500.000 | Poin: 182 (455rb) | Voucher: 200.000</p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                   {/* Manual */}
+                   <div className="bg-red-50 p-4 rounded-lg border border-red-100">
+                    <div className="flex items-center gap-2 mb-3 text-red-700 font-bold border-b border-red-200 pb-2">
+                      <AlertOctagon className="w-4 h-4" /> Cara Manual (Rugi)
+                    </div>
+                    <p className="text-sm text-red-800/80 mb-2">
+                      Kasir lihat poin (455rb) hampir cukup lunasin 500rb.
+                    </p>
+                    <div className="text-sm bg-white/50 p-2 rounded text-red-900 font-mono">
+                      Bayar Poin 455rb -> Sisa 45rb.<br/>
+                      Voucher 200rb cuma kepakai 45rb.<br/>
+                      <span className="font-bold text-red-600">CUSTOMER RUGI 155.000!</span>
+                    </div>
+                  </div>
+
+                  {/* App */}
+                  <div className="bg-green-50 p-4 rounded-lg border border-green-100">
+                    <div className="flex items-center gap-2 mb-3 text-green-700 font-bold border-b border-green-200 pb-2">
+                      <CheckCheck className="w-4 h-4" /> Cara Smart Split
+                    </div>
+                    <p className="text-sm text-green-800/80 mb-2">
+                      App "menahan" penggunaan poin agar voucher masuk dulu.
+                    </p>
+                     <div className="text-sm bg-white/50 p-2 rounded text-green-900 font-mono">
+                      App perintah: "Input 120 Poin (300rb) saja".<br/>
+                      Sisa tagihan jadi 200rb.<br/>
+                      Voucher 200rb masuk <span className="font-bold">FULL 100%</span>.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            
+            <div className="p-6 bg-gray-50 border-t rounded-b-2xl text-center">
+               <button 
+                onClick={() => setShowHelp(false)}
+                className="px-8 py-3 bg-[#0f4372] text-white font-bold rounded-xl hover:bg-[#0a2e4f] transition-colors"
+               >
+                 Mengerti, Tutup Panduan
+               </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
